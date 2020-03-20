@@ -15,6 +15,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from api.serializers import UserSerializer
 
 User = get_user_model()  # pylint: disable=invalid-name
 logging.basicConfig(level=logging.INFO)
@@ -31,4 +32,3 @@ class MeViewSet(ViewSet):
         """Simply returns a single user"""
         return Response(UserSerializer(request.user).data)
 
-    

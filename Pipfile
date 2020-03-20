@@ -17,6 +17,8 @@ python-dotenv = "*"
 django-cors-headers = "*"
 psycopg2 = "*"
 werkzeug = "*"
+drf-yasg = "*"
+djangorestframework-camel-case = "*"
 
 [requires]
 python_version = "3.7"
