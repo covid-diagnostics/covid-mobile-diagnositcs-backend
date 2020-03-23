@@ -2,4 +2,4 @@
 """Models."""
 
 from .user import User
-from .user_questions import UserQuestions
+from .daily_metrics import DailyMetrics

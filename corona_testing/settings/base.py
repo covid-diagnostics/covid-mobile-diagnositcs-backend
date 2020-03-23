@@ -1,7 +1,11 @@
 """Base settings used by all types of deployment"""
 import os
+from datetime import timedelta
+
+from dotenv import find_dotenv, load_dotenv
+
 from corona_testing.util import required_env_var
-from dotenv import load_dotenv, find_dotenv
+
 from .env_vars import *
 
 load_dotenv(find_dotenv())
@@ -13,6 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_KEY")
 
 ALLOWED_HOSTS = ["*"]
 USE_X_FORWARDED_HOST = True
@@ -26,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "api",
     "rest_framework",
+    "drf_yasg",
     "django.contrib.admin",
     "corsheaders",
     "django.contrib.messages",
@@ -108,6 +115,7 @@ USE_L10N = True
 USE_TZ = True
 
 SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=300),
     "AUTH_HEADER_TYPES": ("JWT",),
 }
 
@@ -129,10 +137,7 @@ REST_FRAMEWORK = {
     # "DEFAULT_SCHEMA_CLASS": ".schema.AutoSchema",
 }
 
-AUTHENTICATION_BACKENDS = (
-    "social_core.backends.google.GoogleOAuth2",
-    "django.contrib.auth.backends.ModelBackend",
-)
+AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 

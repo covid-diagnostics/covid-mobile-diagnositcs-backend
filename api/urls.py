@@ -26,4 +26,5 @@ class HyphenatedRouter(DefaultRouter):
 router = HyphenatedRouter()  # pylint: disable=invalid-name
 router.register(r"me", MeViewSet, basename="me")
 
-urlpatterns=[] + router.urls
+urlpatterns = [] + router.urls
+

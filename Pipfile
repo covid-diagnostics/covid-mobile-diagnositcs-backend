@@ -19,6 +19,11 @@ psycopg2 = "*"
 werkzeug = "*"
 drf-yasg = "*"
 djangorestframework-camel-case = "*"
+pillow = "*"
+zappa = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.7"

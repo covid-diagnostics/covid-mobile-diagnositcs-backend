@@ -62,6 +62,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=25, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
+    device_id = models.CharField(max_length=1000, unique=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: List[str] = []
+    REQUIRED_FIELDS: List[str] = ["username"]
