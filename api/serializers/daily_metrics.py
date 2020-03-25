@@ -31,4 +31,4 @@ class HeartRateRecordingSerializer(serializers.Serializer):
 
 class HeartRateSerializer(serializers.Serializer):
     heart_rate = serializers.IntegerField()
-    saturation_percentage = serializers.DecimalField()
+    saturation_percentage = serializers.DecimalField(max_digits=4, decimal_places=2)
