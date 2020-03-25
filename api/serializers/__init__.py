@@ -6,4 +6,9 @@ from .auth import UserTokenSerializer
 
 from .user import UserSerializer, CreateUserSerializer
 
-from .daily_metrics import DailyMetricsSerializer, DailyFilesSerializer
+from .daily_metrics import (
+    DailyMetricsSerializer,
+    DailyFilesSerializer,
+    HeartRateRecordingSerializer,
+    HeartRateSerializer,
+)

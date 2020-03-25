@@ -22,3 +22,13 @@ class DailyFilesSerializer(serializers.ModelSerializer):
         # ref_name = "ApiUserSerializer"
         model = DailyMetrics
         fields = DailyMetrics.FILE_FIELDS + ["id"]
+
+
+class HeartRateRecordingSerializer(serializers.Serializer):
+
+    finger_video = serializers.FileField()
+
+
+class HeartRateSerializer(serializers.Serializer):
+    heart_rate = serializers.IntegerField()
+    saturation_percentage = serializers.DecimalField()
