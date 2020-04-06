@@ -8,6 +8,8 @@ from django.contrib import admin
 from django.utils.functional import cached_property
 from django.http import HttpResponse
 
+from api.models import AnonymousMetrics
+
 
 class ExportCsvMixin:
     def export_as_csv(self, request, queryset):
@@ -47,6 +49,22 @@ class CustomAdmin(admin.ModelAdmin, ExportCsvMixin):
         else:
             self.actions.append("export_as_csv")
 
+
+class AnonymousMetricsAdmin(admin.ModelAdmin):
+    list_display = ("filled_on", "app_heart_rate", "device_heart_rate", "heart_rate_diff",
+                    "app_saturation", "device_saturation", "saturation_diff",
+                    "device_type", "measurement_method", "lightning", "age")
+
+    """
+    def saturation_diff(self, obj):
+        return obj.saturation_diff
+    saturation_diff.admin_order_field = 'saturation_diff'
+
+    #saturation_diff.admin_order_field = '_saturation_diff'
+    #heart_rate_diff.admin_order_field = '_hear_rate_diff'
+    """
+
+admin.site.register(AnonymousMetrics, AnonymousMetricsAdmin)
 
 app_models = apps.get_app_config("api").get_models()  # pylint: disable=invalid-name
 for model in app_models:

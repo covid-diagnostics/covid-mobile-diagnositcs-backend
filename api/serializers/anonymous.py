@@ -8,4 +8,3 @@ class AnonymousMetricsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AnonymousMetrics
-        exclude = AnonymousMetrics.FILE_FIELDS

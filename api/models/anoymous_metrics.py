@@ -14,6 +14,7 @@ class MeasurementMethods:
 
 
 class AnonymousMetrics(models.Model):
+
     MEASUREMENT_METHODS = ((MeasurementMethods.PHONE_ON_THE_MEASURING_HAND, "phone on the measuring hand"),
                            (MeasurementMethods.PHONE_ON_THE_OTHER_HAND, "phone on the other hand"),
                            (MeasurementMethods.PHONE_ON_TABLE, "phone on the table"))
@@ -23,9 +24,11 @@ class AnonymousMetrics(models.Model):
 
     app_heart_rate = models.IntegerField(null=True, blank=True)
     device_heart_rate = models.IntegerField(null=True, blank=True)
+    heart_rate_diff = models.IntegerField(null=True, blank=True)
 
     app_saturation = models.IntegerField(null=True, blank=True)
     device_saturation = models.IntegerField(null=True, blank=True)
+    saturation_diff = models.IntegerField(null=True, blank=True)
 
     device_type = models.TextField(null=True, blank=True)
 
@@ -43,5 +46,9 @@ class AnonymousMetrics(models.Model):
 
     FILE_FIELDS = ["face_recording", "chest_recording", "finger_video"]
 
-
-
+    def save(self):
+        if self.device_heart_rate and self.app_heart_rate:
+            self.heart_rate_diff = self.device_heart_rate - self.app_heart_rate
+        if self.device_saturation and self.app_saturation:
+            self.saturation_diff = self.device_saturation - self.app_saturation
+        super(AnonymousMetrics, self).save()
