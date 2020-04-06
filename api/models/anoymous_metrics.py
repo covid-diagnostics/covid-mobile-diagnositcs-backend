@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy
 
 
 class Lightnings:
@@ -8,9 +9,9 @@ class Lightnings:
 
 
 class MeasurementMethods:
-    PHONE_ON_THE_MEASURING_HAND = "PHONE_ON_THE_MEASURING_HAND"
-    PHONE_ON_THE_OTHER_HAND = "PHONE_ON_THE_OTHER_HAND"
-    PHONE_ON_TABLE = "PHONE_ON_TABLE"
+    PHONE_ON_THE_MEASURING_HAND = "phone on the measuring hand"
+    PHONE_ON_THE_OTHER_HAND = "phone on the other hand"
+    PHONE_ON_TABLE = "phone on the table"
 
 
 class AnonymousMetrics(models.Model):
@@ -25,7 +26,7 @@ class AnonymousMetrics(models.Model):
     app_heart_rate = models.IntegerField(null=True, blank=True)
     device_heart_rate = models.IntegerField(null=True, blank=True)
     heart_rate_diff = models.IntegerField(null=True, blank=True)
-
+    
     app_saturation = models.IntegerField(null=True, blank=True)
     device_saturation = models.IntegerField(null=True, blank=True)
     saturation_diff = models.IntegerField(null=True, blank=True)
