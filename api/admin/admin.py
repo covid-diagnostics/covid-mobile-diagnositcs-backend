@@ -1,12 +1,14 @@
 # pylint: disable=missing-docstring
 """Admin page registration"""
 import csv
-import uuid
 
 from django.apps import apps
 from django.contrib import admin
 from django.utils.functional import cached_property
 from django.http import HttpResponse
+
+from .input_filters import *
+from api.models import AnonymousMetrics
 
 
 class ExportCsvMixin:
@@ -47,6 +49,17 @@ class CustomAdmin(admin.ModelAdmin, ExportCsvMixin):
         else:
             self.actions.append("export_as_csv")
 
+
+class AnonymousMetricsAdmin(CustomAdmin, admin.ModelAdmin):
+    list_display = ("filled_on", "app_heart_rate", "device_heart_rate", "heart_rate_diff",
+                    "app_saturation", "device_saturation", "saturation_diff",
+                    "device_type", "measurement_method", "lightning", "age")
+    list_filter = ("filled_on", AppHeartRateFilter, DeviceHeartRateFilter, HeartRateDiffFilter,
+                   AppSaturationFilter, DeviceSaturationFilter, SaturationDiffFilter,
+                   "device_type", "measurement_method", "lightning", AgeFilter)
+
+
+admin.site.register(AnonymousMetrics, AnonymousMetricsAdmin)
 
 app_models = apps.get_app_config("api").get_models()  # pylint: disable=invalid-name
 for model in app_models:

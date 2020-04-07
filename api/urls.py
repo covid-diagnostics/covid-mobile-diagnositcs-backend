@@ -2,7 +2,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter, Route, escape_curly_brackets
 
-from api.views import MeViewSet, ProcessViewSet
+from api.views import MeViewSet, ProcessViewSet, AnonymousViewSet
 
 
 class HyphenatedRouter(DefaultRouter):
@@ -26,5 +26,6 @@ class HyphenatedRouter(DefaultRouter):
 router = HyphenatedRouter()  # pylint: disable=invalid-name
 router.register(r"me", MeViewSet, basename="me")
 router.register(r"process", ProcessViewSet, basename="process")
+router.register("anonymous", AnonymousViewSet, basename="anonymous")
 
 urlpatterns = [] + router.urls

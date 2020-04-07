@@ -25,7 +25,6 @@ class DailyFilesSerializer(serializers.ModelSerializer):
 
 
 class HeartRateRecordingSerializer(serializers.Serializer):
-
     finger_video = serializers.FileField()
 
 

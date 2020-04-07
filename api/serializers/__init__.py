@@ -12,3 +12,5 @@ from .daily_metrics import (
     HeartRateRecordingSerializer,
     HeartRateSerializer,
 )
+
+from .anonymous import AnonymousMetricsSerializer

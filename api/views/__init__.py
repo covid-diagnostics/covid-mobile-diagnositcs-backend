@@ -3,3 +3,4 @@ from .user import MeViewSet
 
 from .process import ProcessViewSet, ProcessViewSet
 
+from .anonymous import AnonymousViewSet
