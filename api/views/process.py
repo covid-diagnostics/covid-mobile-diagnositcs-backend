@@ -35,7 +35,7 @@ class ProcessViewSet(ViewSet):
         responses={200: HeartRateSerializer()},
     )
     @action(methods=["POST"], detail=False, permission_classes=[AllowAny])
-    def sign_up(self, request):
+    def heart_rate(self, request):
         """Signs up a user and returns the user and token"""
         ser = HeartRateRecordingSerializer(data=request.data)
         ser.is_valid(raise_exception=True)

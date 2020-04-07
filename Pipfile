@@ -24,6 +24,8 @@ zappa = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 django-storages = "*"
+numpy = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.7"
