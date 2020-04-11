@@ -8,3 +8,4 @@ class AnonymousMetricsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AnonymousMetrics
+        fields = "__all__"
