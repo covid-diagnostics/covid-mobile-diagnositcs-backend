@@ -14,6 +14,12 @@ class MeasurementMethods:
     PHONE_ON_TABLE = "PHONE_ON_TABLE"
 
 
+class Positions:
+    SITTING = "SITTING"
+    LAYING_DOWN = "LAYING_DOWN"
+    STANDING = "STANDING"
+
+
 class AnonymousMetrics(models.Model):
 
     MEASUREMENT_METHODS = (
@@ -30,21 +36,29 @@ class AnonymousMetrics(models.Model):
         (Lightnings.LAMP, "LAMP"),
     )
 
+    POSITION_OPTIONS = (
+        (Positions.SITTING, "SITTING"),
+        (Positions.LAYING_DOWN, "LAYING_DOWN"),
+        (Positions.STANDING, "STANDING"),
+    )
+
     filled_on = models.DateTimeField(auto_now_add=True)
 
     app_heart_rate = models.IntegerField(null=True, blank=True)
     device_heart_rate = models.IntegerField(null=True, blank=True)
-    #heart_rate_diff = models.IntegerField(null=True, blank=True)
+    # heart_rate_diff = models.IntegerField(null=True, blank=True)
 
     app_saturation = models.IntegerField(null=True, blank=True)
     device_saturation = models.IntegerField(null=True, blank=True)
-    #saturation_diff = models.IntegerField(null=True, blank=True)
+    # saturation_diff = models.IntegerField(null=True, blank=True)
 
     device_type = models.TextField(null=True, blank=True)
 
     measurement_method = models.TextField(choices=MEASUREMENT_METHODS)
 
     lightning = models.TextField(choices=LIGHTNING_OPTIONS)
+
+    position = models.TextField(choices=POSITION_OPTIONS, null=True, blank=True)
 
     age = models.IntegerField(null=True, blank=True)
 
