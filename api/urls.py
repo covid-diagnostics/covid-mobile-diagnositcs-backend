@@ -26,6 +26,6 @@ class HyphenatedRouter(DefaultRouter):
 router = HyphenatedRouter()  # pylint: disable=invalid-name
 router.register(r"me", MeViewSet, basename="me")
 router.register(r"process", ProcessViewSet, basename="process")
-router.register("anonymous", AnonymousViewSet, basename="anonymous")
+router.register(r"anonymous", AnonymousViewSet, basename="anonymous")
 
 urlpatterns = [] + router.urls
