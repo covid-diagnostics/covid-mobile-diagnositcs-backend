@@ -79,6 +79,7 @@ def _handle_side_effects(user, template_name):
 
 
 def run_mail_sending_job(target_users=None, is_event=True):
+    # Shouldn't work now since emails are hashed
     users = target_users
     if target_users is None or is_event:
         users = _find_target_users()
