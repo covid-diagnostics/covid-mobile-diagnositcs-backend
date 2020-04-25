@@ -11,7 +11,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from api.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -19,8 +19,8 @@ from api.serializers import (
     UserSerializer,
     CreateUserSerializer,
     UserTokenSerializer,
-    DailyFilesSerializer,
-    DailyMetricsSerializer,
+    # DailyFilesSerializer,
+    # DailyMetricsSerializer,
 )
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -69,34 +69,34 @@ class MeViewSet(ViewSet):
         user = ser.save()
         return Response(UserSerializer(user).data)
 
-    @swagger_auto_schema(
-        operation_id="fillDailyMetrics",
-        method="POST",
-        request_body=DailyMetricsSerializer(),
-        responses={200: DailyMetricsSerializer()},
-    )
-    @action(methods=["POST"], detail=False)
-    def fill_daily_metrics(self, request):
-        """Called to submit written daily metrics, expects to receive all answers for metric questions"""
-        ser = DailyMetricsSerializer(data=request.data, context={"request": request})
-        ser.is_valid(raise_exception=True)
-        ser.save()
-        return Response(ser.data)
+    # @swagger_auto_schema(
+    #     operation_id="fillDailyMetrics",
+    #     method="POST",
+    #     request_body=DailyMetricsSerializer(),
+    #     responses={200: DailyMetricsSerializer()},
+    # )
+    # @action(methods=["POST"], detail=False)
+    # def fill_daily_metrics(self, request):
+    #     """Called to submit written daily metrics, expects to receive all answers for metric questions"""
+    #     ser = DailyMetricsSerializer(data=request.data, context={"request": request})
+    #     ser.is_valid(raise_exception=True)
+    #     ser.save()
+    #     return Response(ser.data)
 
-    @swagger_auto_schema(
-        operation_id="submitRawInfo",
-        method="PUT",
-        request_body=DailyFilesSerializer(partial=True),
-        responses={200: {}},
-    )
-    @action(methods=["PUT"], detail=False)
-    def submit_raw_info(self, request):
-        metrics = request.user.submitted_metrics.filter(id=request.data["id"]).first()
-        if metrics is None:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        ser = DailyFilesSerializer(
-            metrics, data=request.data, partial=True
-        )
-        ser.is_valid()
-        ser.save()
-        return Response(status=status.HTTP_200_OK)
+    # @swagger_auto_schema(
+    #     operation_id="submitRawInfo",
+    #     method="PUT",
+    #     request_body=DailyFilesSerializer(partial=True),
+    #     responses={200: {}},
+    # )
+    # @action(methods=["PUT"], detail=False)
+    # def submit_raw_info(self, request):
+    #     metrics = request.user.submitted_metrics.filter(id=request.data["id"]).first()
+    #     if metrics is None:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+    #     ser = DailyFilesSerializer(
+    #         metrics, data=request.data, partial=True
+    #     )
+    #     ser.is_valid()
+    #     ser.save()
+    #     return Response(status=status.HTTP_200_OK)

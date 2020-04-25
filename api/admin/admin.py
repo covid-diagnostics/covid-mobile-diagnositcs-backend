@@ -6,9 +6,10 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.functional import cached_property
 from django.http import HttpResponse
-
+from modeltranslation.admin import TranslationAdmin
+from api.models import Question
 from .input_filters import *
-from api.models import AnonymousMetrics
+#from api.models import AnonymousMetrics
 
 
 class ExportCsvMixin:
@@ -50,16 +51,21 @@ class CustomAdmin(admin.ModelAdmin, ExportCsvMixin):
             self.actions.append("export_as_csv")
 
 
-class AnonymousMetricsAdmin(CustomAdmin, admin.ModelAdmin):
-    list_display = ("filled_on", "app_heart_rate", "device_heart_rate", "heart_rate_diff",
-                    "app_saturation", "device_saturation", "saturation_diff",
-                    "device_type", "measurement_method", "lightning", "age")
-    list_filter = ("filled_on", AppHeartRateFilter, DeviceHeartRateFilter, HeartRateDiffFilter,
-                   AppSaturationFilter, DeviceSaturationFilter, SaturationDiffFilter,
-                   "device_type", "measurement_method", "lightning", AgeFilter)
+# class AnonymousMetricsAdmin(CustomAdmin, admin.ModelAdmin):
+#     list_display = ("filled_on", "app_heart_rate", "device_heart_rate", "heart_rate_diff",
+#                     "app_saturation", "device_saturation", "saturation_diff",
+#                     "device_type", "measurement_method", "lightning", "age")
+#     list_filter = ("filled_on", AppHeartRateFilter, DeviceHeartRateFilter, HeartRateDiffFilter,
+#                    AppSaturationFilter, DeviceSaturationFilter, SaturationDiffFilter,
+#                    "device_type", "measurement_method", "lightning", AgeFilter)
 
 
-admin.site.register(AnonymousMetrics, AnonymousMetricsAdmin)
+# admin.site.register(AnonymousMetrics, AnonymousMetricsAdmin)
+
+class QuestionAdmin(TranslationAdmin):
+    pass
+
+admin.site.register(Question, QuestionAdmin)
 
 app_models = apps.get_app_config("api").get_models()  # pylint: disable=invalid-name
 for model in app_models:

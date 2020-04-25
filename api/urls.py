@@ -2,7 +2,15 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter, Route, escape_curly_brackets
 
-from api.views import MeViewSet, ProcessViewSet, AnonymousViewSet
+from api.views import (
+    MeViewSet,
+    QuestionViewSet,
+    MeasurementViewSet,
+    PPGMeasurementViewSet,
+    QuestionResponseViewSet,
+    VoiceRecordingViewSet,
+    UserInfoViewSet,
+)
 
 
 class HyphenatedRouter(DefaultRouter):
@@ -25,7 +33,13 @@ class HyphenatedRouter(DefaultRouter):
 
 router = HyphenatedRouter()  # pylint: disable=invalid-name
 router.register(r"me", MeViewSet, basename="me")
-router.register(r"process", ProcessViewSet, basename="process")
-router.register(r"anonymous", AnonymousViewSet, basename="anonymous")
+router.register(r"question", QuestionViewSet, basename="question")
+router.register(
+    r"question-response", QuestionResponseViewSet, basename="question-response"
+)
+router.register(r"measurement", MeasurementViewSet, basename="measurement")
+router.register(r"ppg-measurement", PPGMeasurementViewSet, basename="ppg-measurement")
+router.register(r"voice-recording", VoiceRecordingViewSet, basename="voice-recording")
+router.register(r"user-info", UserInfoViewSet, basename="user-info")
 
 urlpatterns = [] + router.urls

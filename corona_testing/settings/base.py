@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "api",
     "rest_framework",
     "drf_yasg",
+    "modeltranslation",
     "django.contrib.admin",
     "corsheaders",
     "django.contrib.messages",
@@ -43,6 +44,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -111,6 +113,13 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_L10N = True
+
+gettext = lambda s: s
+LANGUAGES = (
+    ("en", gettext("English")),
+    ("he", gettext("Hebrew")),
+)
+
 
 USE_TZ = True
 

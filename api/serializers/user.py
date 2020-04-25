@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.fields import EmailField
 
-from api.models import User, DailyMetrics
+from api.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
