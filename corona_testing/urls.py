@@ -26,7 +26,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework.permissions import IsAdminUser
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from .views import TokenObtainUserView
+from .views import LoginView
 
 decorated_refresh_view = method_decorator(
     swagger_auto_schema(operation_id="refreshToken"), "post"
@@ -36,7 +36,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("auth/refresh/", decorated_refresh_view.as_view()),
-    path("auth/login/email/", TokenObtainUserView.as_view()),
+    path("auth/login/", LoginView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

@@ -1,8 +1,31 @@
 from drf_yasg.utils import swagger_serializer_method
+
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from api.models import User
 
 from .user import UserSerializer
+
+
+
+class LoginTokenSerializer(TokenObtainPairSerializer):
+    def authenticate(self, username=None, password=None, **kwargs):
+        pass
+
+    def validate(self, attr):
+        request = self.context["request"]
+
+        request_data = (request.data)
+        username = request_data.get("username")
+        phonenumber_hash = request_data.get("phonenumber_hash")
+        print(phonenumber_hash)
+
+        user = User.objects.get(phonenumber_hash=attr["username"])
+        # user = User.objects.get(phonenumber_hash=phonenumber_hash)
+
+        
+        return (UserTokenSerializer(user).data)
 
 
 class TokenSerializer(serializers.Serializer):

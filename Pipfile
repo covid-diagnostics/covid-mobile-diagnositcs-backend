@@ -25,6 +25,7 @@ psycopg2-binary = "*"
 whitenoise = "*"
 django-storages = "*"
 django-modeltranslation = "*"
+django-rest-framework = "*"
 
 [requires]
 python_version = "3.7"

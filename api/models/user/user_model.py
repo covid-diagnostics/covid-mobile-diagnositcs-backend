@@ -59,10 +59,22 @@ class User(AbstractUser):
     """Custom Corona Testing  user implementation
     """
 
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=25, null=True, blank=True)
-    age = models.IntegerField(null=True, blank=True)
+    # email = models.EmailField(unique=True)
+    # username = models.CharField(max_length=25, null=True, blank=True)
+    # age = models.IntegerField(null=True, blank=True)
+    # USERNAME_FIELD = "email"
+    # REQUIRED_FIELDS: List[str] = ["username"]
+    
+    # deafult User model of django is unique=True
+    username = models.CharField(max_length=25, null=True, blank=True, unique=False)
+
+    phonenumber_hash = models.CharField(max_length=1000, unique=True)
     device_id = models.CharField(max_length=1000, unique=True)
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: List[str] = ["username"]
+    REQUIRED_FIELDS = ['phonenumber_hash']
+
+
+    def __str__(self):
+        return str(self.phonenumber_hash)
+
+    

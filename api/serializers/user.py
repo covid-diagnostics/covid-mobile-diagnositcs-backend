@@ -12,27 +12,21 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         # ref_name = "ApiUserSerializer"
         model = User
-        exclude = [
-            "username",
-            "password",
-            "is_superuser",
-            "is_staff",
-            "groups",
-            "date_joined",
-            "user_permissions",
+        fields = [
+            "phonenumber_hash",
         ]
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["email", "password", "device_id"]
-        extra_kwargs = {"password": {"write_only": True}}
+        fields = ["phonenumber_hash", "device_id"]
+        # extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = User(
-            email=validated_data["email"], device_id=validated_data["device_id"]
+            phonenumber_hash=validated_data["phonenumber_hash"], device_id=validated_data["device_id"]
         )
-        user.set_password(validated_data["password"])
+        # user.set_password(validated_data["password"])
         user.save()
         return user

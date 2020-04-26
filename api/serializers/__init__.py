@@ -2,7 +2,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .auth import UserTokenSerializer
+from .auth import UserTokenSerializer, LoginTokenSerializer
 
 from .user import UserSerializer, CreateUserSerializer
 
