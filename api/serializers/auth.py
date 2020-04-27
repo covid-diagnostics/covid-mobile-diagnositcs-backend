@@ -18,8 +18,7 @@ class LoginTokenSerializer(TokenObtainPairSerializer):
         request_data = (request.data)
 
         phonenumber_hash = request_data.get("phonenumber_hash")
-
-        user = User.objects.get(phonenumber_hash=attr["username"])
+        user = User.objects.get(phonenumber_hash=phonenumber_hash)
         
         return (UserTokenSerializer(user).data)
 
