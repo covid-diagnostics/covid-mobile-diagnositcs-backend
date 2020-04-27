@@ -15,15 +15,11 @@ class LoginTokenSerializer(TokenObtainPairSerializer):
 
     def validate(self, attr):
         request = self.context["request"]
-
         request_data = (request.data)
-        username = request_data.get("username")
+
         phonenumber_hash = request_data.get("phonenumber_hash")
-        print(phonenumber_hash)
 
         user = User.objects.get(phonenumber_hash=attr["username"])
-        # user = User.objects.get(phonenumber_hash=phonenumber_hash)
-
         
         return (UserTokenSerializer(user).data)
 
