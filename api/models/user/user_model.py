@@ -71,6 +71,7 @@ class User(AbstractUser):
     phonenumber_hash = models.CharField(max_length=1000, unique=True)
     device_id = models.CharField(max_length=1000, unique=True)
 
+    # USERNAME_FIELD = "phonenumber_hash"
     REQUIRED_FIELDS = ['phonenumber_hash']
 
 
