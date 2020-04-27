@@ -16,6 +16,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         # ref_name = "ApiUserSerializer"
         model = Question
         fields = [
+            "id",
             "name",
             "display_name",
             "qtype",
