@@ -1,5 +1,7 @@
 from enum import Enum
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
 from api.models import User
 
 
@@ -12,7 +14,7 @@ class Genders(Enum):
 class SmokingHabits(Enum):
     NEVER = "NEVER"
     STOPPED = "STOPPED"
-    #RECENT = "RECENT"
+    # RECENT = "RECENT"
     CURRENT = "CURRENT"
 
 
@@ -28,3 +30,7 @@ class UserInfo(models.Model):
     )
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    smoking_status = models.CharField(
+        max_length=50, choices=[(g.value, g.value) for g in SmokingHabits], null=True
+    )
+    background_diseases = ArrayField(models.TextField(), null=True, blank=True)
