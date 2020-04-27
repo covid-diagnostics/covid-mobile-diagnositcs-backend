@@ -30,4 +30,4 @@ class QuestionViewSet(ReadOnlyModelViewSet):
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
-        return Question.objects.all()
+        return Question.objects.filter(active=True)
