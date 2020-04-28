@@ -16,16 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
             "device_id",
         ]
 
-        # exclude = [
-        #     "username",
-        #     "password",
-        #     "is_superuser",
-        #     "is_staff",
-        #     "groups",
-        #     "date_joined",
-        #     "user_permissions",
-        # ]
-
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,9 +31,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         user = User(
             phone_number_hash=validated_data["phone_number_hash"], device_id=validated_data["device_id"]
         )
-        print('******')
-        print(user)
-        print('******')
+
         # user.set_password(validated_data["password"])
         user.save()
         return user

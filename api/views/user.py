@@ -49,16 +49,10 @@ class MeViewSet(ViewSet):
         """Signs up a user and returns the user and token"""
         ser = CreateUserSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        print('******')
-        print('******')
-        print('******')
-        print('******')
-        print(ser)
-        print('******')
-        print('******')
+
         user = ser.save()
 
-        return Response(UserTokenSerializer(ser).data)
+        return Response(UserTokenSerializer(user).data)
 
     @swagger_auto_schema(
         operation_id="fillPersonalInfo",

@@ -23,6 +23,7 @@ class UserTokenSerializer(serializers.Serializer):
             data={"refresh": str(refresh), "access": str(refresh.access_token)}
         )
         ser.is_valid()
+
         return ser.data
 
     @swagger_serializer_method(UserSerializer(read_only=True))
