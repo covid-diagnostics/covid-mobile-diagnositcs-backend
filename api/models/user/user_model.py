@@ -59,10 +59,10 @@ class User(AbstractUser):
     """Custom Corona Testing  user implementation
     """
 
-    email = models.EmailField(unique=True)
+    user_id = models.CharField(max_length=125)
     username = models.CharField(max_length=25, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
     device_id = models.CharField(max_length=1000, unique=True)
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "user_id"
     REQUIRED_FIELDS: List[str] = ["username"]
