@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .auth import UserTokenSerializer
-
+from .login_auth import TokenObtainUserSerializer
 from .user import UserSerializer, CreateUserSerializer
 
 from .question import QuestionSerializer

@@ -59,10 +59,16 @@ class User(AbstractUser):
     """Custom Corona Testing  user implementation
     """
 
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=25, null=True, blank=True)
-    age = models.IntegerField(null=True, blank=True)
+    # email = models.EmailField(unique=True)
+    
+    # age = models.IntegerField(null=True, blank=True)
+
+    username = models.CharField(max_length=25, null=True, blank=True, unique=False)
+    # max length of SHA512 is 128 chars
+    phone_number_hash = models.CharField(max_length=150, unique=True)
     device_id = models.CharField(max_length=1000, unique=True)
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: List[str] = ["username"]
+    USERNAME_FIELD = "phone_number_hash"
+
+    def __str__(self):
+        return self.phone_number_hash
