@@ -1,5 +1,6 @@
 from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
+
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .user import UserSerializer
@@ -22,8 +23,10 @@ class UserTokenSerializer(serializers.Serializer):
             data={"refresh": str(refresh), "access": str(refresh.access_token)}
         )
         ser.is_valid()
+
         return ser.data
 
     @swagger_serializer_method(UserSerializer(read_only=True))
     def get_user(self, obj):
         return UserSerializer(obj).data
+

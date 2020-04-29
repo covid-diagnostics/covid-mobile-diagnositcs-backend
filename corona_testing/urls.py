@@ -36,7 +36,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("auth/refresh/", decorated_refresh_view.as_view()),
-    path("auth/login/email/", TokenObtainUserView.as_view()),
+    path("auth/login/phonenumber/", TokenObtainUserView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
