@@ -9,7 +9,7 @@ from .user import UserSerializer
 from api.models import User
 
 
-class LoginCostumeAuth(BaseBackend):
+class PhoneNumberHashAuth(BaseBackend):
     def authenticate(self, request, phone_number_hash):
         try:
             user = User.objects.get(phone_number_hash=phone_number_hash)
@@ -42,7 +42,6 @@ class CostumeTokenObtainSerializer(serializers.Serializer):
         except KeyError:
             pass
         
-        print(authenticate_kwargs)
         self.user = authenticate(**authenticate_kwargs)
 
         if self.user is None or not self.user.is_active:
