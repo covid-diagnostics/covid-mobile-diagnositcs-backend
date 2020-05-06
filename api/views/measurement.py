@@ -29,3 +29,11 @@ class MeasurementViewSet(CreateModelMixin, GenericViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
+
+    @swagger_auto_schema(
+        operation_id="retrieveMeasurementCount", responses={200: openapi.TYPE_INTEGER}
+    )
+    @action(methods=["GET"], detail=False)
+    def count(self, request):
+        num_measurements = Measurement.objects.all().count()
+        return Response(num_measurements)

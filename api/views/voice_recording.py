@@ -29,4 +29,4 @@ class VoiceRecordingViewSet(CreateModelMixin, GenericViewSet):
 
     permission_classes = [IsAuthenticated]
     queryset = VoiceRecording.objects.all()
-    serializer_class = VoiceRecordingSerializer()
+    serializer_class = VoiceRecordingSerializer
