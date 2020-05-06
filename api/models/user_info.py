@@ -28,7 +28,7 @@ class UserInfo(models.Model):
         null=True,
         blank=True,
     )
-    country = models.CharField(max_length=2, null=True, blank=True)
+    country = models.CharField(max_length=3, null=True, blank=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     smoking_status = models.CharField(
