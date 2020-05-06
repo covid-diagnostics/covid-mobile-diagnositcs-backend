@@ -10,65 +10,72 @@ from typing import TYPE_CHECKING, Any, Dict, Optional, List
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 
-# from django_fsm import FSMKeyField, transition
-# from phonenumber_field.modelfields import PhoneNumberField
 
-# import api.sms
+class HashedUserManager(UserManager):
+    def _create_user(self, phone_number_hash, email, password, **extra_fields):
+        """
+        Create and save a user with the given hashed id, email, and password.
+        """
+        email = self.normalize_email(email)
+        #username = self.model.normalize_username(username)
+        user = self.model(phone_number_hash=phone_number_hash, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-# from api.util import get_base_url
+    def create_user(self, phone_number_hash, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(phone_number_hash, email, password, **extra_fields)
 
-# from ..category_attributes import CategoryAttributeEnum
-# from ..status import OnboardingEnum, ProviderRequestEnum, UserEnum
-# from ..user_requests import ProviderRequest
-# from .exceptions import *  # pylint: disable=wildcard-import, unused-wildcard-import
-# from .onboarding.onboarding_verifier import OnboardingVerifier
-# from .user_email import UserEmail
+    def create_superuser(self, phone_number_hash, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
 
-# if TYPE_CHECKING:
-#     from api.models import Address, UserChangeRequest, ServiceProviderCategory
-#     from django.db.models.query import QuerySet  # pylint: disable= ungrouped-imports
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
 
-# logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
-# logger.setLevel(logging.INFO)
+        return self._create_user(phone_number_hash, email, password, **extra_fields)
 
-# BYPASS_NUMBER = "+447333090909"
-
-# ONOBARDING_STATES = [status.value for status in OnboardingEnum]
-
-
-# class UserStatus(models.Model):
-#     id = models.CharField(max_length=100, unique=True, primary_key=True)
-
-#     def __str__(self):
-#         return self.id
-
-#     @classmethod
-#     def get_status(cls, status):
-#         return cls.objects.get(status=status)
-
-#     class Meta:
-#         verbose_name_plural = "User statuses"
-
-
-class User(AbstractUser):
-    """Custom Corona Testing  user implementation
+class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Custom Corona Testing user implementation
     """
 
-    # email = models.EmailField(unique=True)
-    
-    # age = models.IntegerField(null=True, blank=True)
+    username_validator = UnicodeUsernameValidator()
 
-    username = models.CharField(max_length=25, null=True, blank=True, unique=False)
-    # max length of SHA512 is 128 chars
     phone_number_hash = models.CharField(max_length=150, unique=True)
-    device_id = models.CharField(max_length=1000, unique=True)
+    password = models.CharField(max_length=128, null=True,blank=True)
+    email = models.EmailField(null=True, blank=True)
+
+    is_staff = models.BooleanField(
+        _("staff status"),
+        default=False, 
+        help_text=_("Designates whether the user can log into this admin site."),
+    )
+    is_active = models.BooleanField(
+        _("active"),
+        default=True,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+
+    objects = HashedUserManager()
 
     USERNAME_FIELD = "phone_number_hash"
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.phone_number_hash
