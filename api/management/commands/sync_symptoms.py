@@ -5,6 +5,8 @@ from api.models import Question
 from api.models.question import QuestionType
 
 ICON_URL = "https://staging-storage-corona-testing.s3-eu-west-1.amazonaws.com/media/symptom-icons/{name}.svg"
+ICON_PNG_URL = "https://staging-storage-corona-testing.s3-eu-west-1.amazonaws.com/media/symptom-icons/{name}.png"
+
 SYMPTOMS = [
     {"name_en": "Cough", "name_he": "שיעול", "optionValue": "cough"},
     {"name_en": "Body ache", "name_he": "כאבי גוף", "optionValue": "body_ache"},
@@ -59,6 +61,7 @@ class Command(BaseCommand):
                     "optionName": symp["name_en"],
                     "optionValue": symp["optionValue"],
                     "optionImage": ICON_URL.format(name=symp["optionValue"]),
+                    "optionPngImage": ICON_PNG_URL.format(name=symp["optionValue"])
                 }
                 for symp in SYMPTOMS
             ]
@@ -70,6 +73,7 @@ class Command(BaseCommand):
                     "optionName": symp["name_he"],
                     "optionValue": symp["optionValue"],
                     "optionImage": ICON_URL.format(name=symp["optionValue"]),
+                    "optionPngImage": ICON_PNG_URL.format(name=symp["optionValue"])
                 }
                 for symp in SYMPTOMS
             ]
