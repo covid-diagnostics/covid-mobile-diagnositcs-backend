@@ -31,11 +31,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        user = User(
+        user, created = User.objects.get_or_create(
             phone_number_hash=validated_data["phone_number_hash"],
             # device_id=validated_data["device_id"],
         )
 
-        # user.set_password(validated_data["password"])
-        user.save()
         return user
